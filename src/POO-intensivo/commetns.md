@@ -1,3 +1,9 @@
+## POO con TS
+### Abstracción
+La abtracción en POO es un concepto calve que permite definir plantillas para clases, especificando qué deben hacer (métodos) perno no cómo lo hacen (implementanción). 
+
+En TS se aplica de la siguiente forma
+
 ## C01: Inicializar
 Cuando creamos una Clase y dentro de ella por ejemplo tenemos los siguiente:
 ```
@@ -58,3 +64,5 @@ private	            Sí	                        ❌	               ❌
 ### En este caso poqué falla exacamente el código:
 - Se está intentando acceder a `condigiconMedica()` desde una instancia (animal01), pero `protected` no lo permite.
 - Soluación: Se debe usar `protected` cuando se quiere que un método se accesible solo internamente o por clases hijas
+
+## 
