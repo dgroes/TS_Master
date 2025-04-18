@@ -40,13 +40,12 @@ class Circulo extends Figura {
         return Math.PI * this.radio ** 2;
     }
 }
-class Rectangulo extends Figura {
-    constructor(ancho, alto) {
+/* class Rectangulo extends Figura {
+    constructor(private ancho: number, private alto: number) {
         super();
-        this.ancho = ancho;
-        this.alto = alto;
     }
-    area() {
+
+    area(): number {
         return this.ancho * this.alto;
     }
-}
+} */ 

@@ -54,7 +54,7 @@ class Circulo extends Figura{
     }
 }
 
-class Rectangulo extends Figura {
+/* class Rectangulo extends Figura {
     constructor(private ancho: number, private alto: number) {
         super();
     }
@@ -62,4 +62,4 @@ class Rectangulo extends Figura {
     area(): number {
         return this.ancho * this.alto;
     }
-}
+} */
