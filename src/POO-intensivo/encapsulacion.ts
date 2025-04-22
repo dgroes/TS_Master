@@ -132,7 +132,7 @@ console.log(dalpo.edad);
 
     Un método público leer() que reste 1 página cada vez que se llame (y si no hay páginas, lance un error).
 */
-
+/* 
 class Libro {
     private _paginas: number;
     private _titulo: string;
@@ -170,4 +170,4 @@ class Libro {
 
 const libro = new Libro(100, "Cien años de soledad");
 libro.titulo = "Rayuela"; // Usa el setter como propiedad
-console.log(libro.titulo); // Usa el getter
+console.log(libro.titulo); // Usa el getter */

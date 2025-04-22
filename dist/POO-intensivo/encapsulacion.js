@@ -106,33 +106,42 @@ console.log(dalpo.edad);
 
     Un método público leer() que reste 1 página cada vez que se llame (y si no hay páginas, lance un error).
 */
+/*
 class Libro {
-    constructor(paginas, titulo) {
+    private _paginas: number;
+    private _titulo: string;
+
+    constructor(paginas: number, titulo: string) {
         this._paginas = paginas;
         this._titulo = titulo;
     }
+
     // Getters
-    get paginas() {
+    public get paginas(): number {
         return this._paginas;
     }
-    get titulo() {
+
+    public get titulo(): string {
         return this._titulo;
     }
+
     // Setter para título
-    set titulo(nuevoTitulo) {
+    public set titulo(nuevoTitulo: string) {
         if (nuevoTitulo.length < 3) {
             throw new Error("❌ El título debe tener al menos 3 caracteres");
         }
         this._titulo = nuevoTitulo;
     }
+
     // Método para leer
-    leerPagina() {
+    public leerPagina(): number {
         if (this._paginas === 0) {
             throw new Error("¡No hay páginas por leer! 📖❌");
         }
         return --this._paginas;
     }
 }
+
 const libro = new Libro(100, "Cien años de soledad");
 libro.titulo = "Rayuela"; // Usa el setter como propiedad
-console.log(libro.titulo); // Usa el getter
+console.log(libro.titulo); // Usa el getter */ 
