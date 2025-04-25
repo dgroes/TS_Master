@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestor de Ta</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.blue.min.css"
+    />
+  </head>
+  <body>
+    <main class="container-fluid">
+      <h1>Mis tareas 🐢</h1>
+
+      <form id="task-form">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Escribe una tarea"
+          required
+        />
+        <button type="submit">Agregar</button>
+      </form>
+
+      <ul id="task-list"></ul>
+
+      <script type="module" src="./dist/main.js"></script>
+    </main>
+  </body>
+</html>
