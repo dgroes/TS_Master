@@ -28,4 +28,10 @@ export class TaskService {
             });
         }
     }
+
+    public deleteTask(id: number): void {
+        this.task = this.task.filter(task => task.id !== id);
+        this.saveToLocalStorage();
+    }
+
 }

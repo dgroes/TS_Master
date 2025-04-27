@@ -26,4 +26,8 @@ export class TaskService {
             });
         }
     }
+    deleteTask(id) {
+        this.task = this.task.filter(task => task.id !== id);
+        this.saveToLocalStorage();
+    }
 }
