@@ -15,15 +15,11 @@
       <h1>Mis tareas 🐢</h1>
 
       <form id="task-form">
-        <input
-          type="text"
-          id="task-input"
-          placeholder="Escribe una tarea"
-          required
-        />
-        <button type="submit">Agregar</button>
+        <input type="text" id="task-title" placeholder="Título" required />
+        <input type="text" id="task-desc" placeholder="Descripción" />
+        <button type="submit">Agregar tarea</button>
       </form>
-
+      
       <ul id="task-list"></ul>
 
       <script type="module" src="./dist/main.js"></script>
