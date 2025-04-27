@@ -5,27 +5,65 @@ const service = new TaskService();
 service.loadFromLocalStorage();
 
 // Referencias a elementos del DOM
+/* C05: Aserción de Tipo */
 const form = document.getElementById("task-form") as HTMLFormElement;
-const input = document.getElementById("task-input") as HTMLFormElement;
-const taskList = document.getElementById("task-list") as HTMLFormElement;
+const titleInput = document.getElementById("task-title") as HTMLInputElement;
+const descInput = document.getElementById("task-desc") as HTMLInputElement;
+const taskList = document.getElementById("task-list") as HTMLUListElement;
 
+
+//Mostrar tareas en pantalla
+function renderTasks(): void {
+    taskList.innerHTML = ""; //Limpiar antes de volver a renderizar
+    const tasks = service.getTask();
+
+    tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = `${task.title} - ${task.description} ${task.isCompleted() ? " ✅" : ""}`;
+
+        //Botón Eliminar
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "🗑️";
+        delBtn.onclick = () => {
+            //Eliminar del array
+            service.deleteTask(task.id);
+
+            //Rendereizar de nuevo
+            renderTasks();
+        }
+
+        //Botón Completar Tarea
+        const completeBtn = document.createElement("button");
+        completeBtn.textContent = "✅";
+        completeBtn.onclick = () => {
+            //Marcar Tarea como Completada 
+            completeBtn.onclick = () => {
+                task.markAsCompleted();       // cambiar estado de la tarea
+                service.saveToLocalStorage(); // Guardamos cambios
+                renderTasks();
+            }         
+        }
+
+        li.appendChild(delBtn);
+        li.appendChild(completeBtn);
+        taskList.appendChild(li);
+    });
+}
+
+//Agregar una nueva tarea
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const taskText = input.value.trim();
+    const title = titleInput.value.trim();
+    const description = descInput.value.trim();
+    if (title === "") return;
 
-    if (taskText === "") return;
+    service.addTask(title, description);
+    renderTasks();
 
-    const li = document.createElement("li");
-    li.textContent = taskText;
+    titleInput.value = "";
+    descInput.value = "";
+});
 
-    //botón eleiminar
-    const btn = document.createElement("button");
-    btn.textContent = "🗑️";
-    btn.onclick = () => li.remove();
-
-    li.appendChild(btn);
-    taskList.appendChild(li);
-    input.value = "";
-})
-
+//Mostrar tareas al cargar
+renderTasks();
