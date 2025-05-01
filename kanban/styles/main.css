@@ -1,0 +1,39 @@
+#kanban{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem
+}
+
+.kanban article{
+    background-color: #007a50;
+}
+
+article header{
+    font-weight: bold;
+}
+
+#add{
+    width: max-content;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.kanban-column {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    min-width: 250px;
+    flex: 1;
+}
+
+/* Colores específicos */
+.kanban--todo {
+    background-color: #0172ad;
+}
+
+.kanban--progress {
+    background-color: #f2df0d;
+}
+
+.kanban--done {
+    background-color: #007a50;
+}

@@ -10,43 +10,75 @@ const form = document.getElementById("task-form") as HTMLFormElement;
 const titleInput = document.getElementById("task-title") as HTMLInputElement;
 const descInput = document.getElementById("task-desc") as HTMLInputElement;
 const taskList = document.getElementById("task-list") as HTMLUListElement;
+const completedTable = document.getElementById("completedTable") as HTMLTableElement;
 
 
 //Mostrar tareas en pantalla
 function renderTasks(): void {
     taskList.innerHTML = ""; //Limpiar antes de volver a renderizar
+    completedTable.innerHTML = "<tr><th>Título</th><th>Descripción</th><th>Acciones</th></tr>"; //Limpiar y crear encabezado de la tabla
+
     const tasks = service.getTask();
 
     tasks.forEach(task => {
-        const li = document.createElement("li");
-        li.textContent = `${task.title} - ${task.description} ${task.isCompleted() ? " ✅" : ""}`;
+        if (task.isCompleted()) {
+            // --- TAREAS COMPLETADAS EN TABLA ---
+            const row = document.createElement("tr"); //Fila para la tabla
 
-        //Botón Eliminar
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "🗑️";
-        delBtn.onclick = () => {
-            //Eliminar del array
-            service.deleteTask(task.id);
+            const titleCell = document.createElement("td"); //Celda Título
+            titleCell.textContent = task.title;
 
-            //Rendereizar de nuevo
-            renderTasks();
-        }
+            const descCell = document.createElement("td"); //Celda Descripción
+            descCell.textContent = task.description;
 
-        //Botón Completar Tarea
-        const completeBtn = document.createElement("button");
-        completeBtn.textContent = "✅";
-        completeBtn.onclick = () => {
-            //Marcar Tarea como Completada 
+            const actionsCell = document.createElement("td"); //Celda Acciones
+
+            //Botón Eliminar
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "🗑️";
+            delBtn.onclick = () => {
+                //Eliminar del array
+                service.deleteTask(task.id);
+                //Rendereizar de nuevo
+                renderTasks();
+            };
+
+            actionsCell.appendChild(delBtn);
+            row.appendChild(titleCell);
+            row.appendChild(descCell);
+            row.appendChild(actionsCell);
+            completedTable.appendChild(row);
+
+        } else {
+            // --- TAREAS PENDIENTES EN LISTA ---
+            const li = document.createElement("li");
+            li.textContent = `${task.title} - ${task.description} ${task.isCompleted() ? " ✅" : ""}`;
+
+            //Botón Eliminar
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "🗑️";
+            delBtn.onclick = () => {
+                //Eliminar del array
+                service.deleteTask(task.id);
+
+                //Rendereizar de nuevo
+                renderTasks();
+            };
+
+            //Botón Completar Tarea
+            const completeBtn = document.createElement("button");
+            completeBtn.textContent = "✅";
             completeBtn.onclick = () => {
+                //Marcar Tarea como Completada 
                 task.markAsCompleted();       // cambiar estado de la tarea
                 service.saveToLocalStorage(); // Guardamos cambios
                 renderTasks();
-            }         
-        }
+            };
 
-        li.appendChild(delBtn);
-        li.appendChild(completeBtn);
-        taskList.appendChild(li);
+            li.appendChild(delBtn);
+            li.appendChild(completeBtn);
+            taskList.appendChild(li);
+        }
     });
 }
 
