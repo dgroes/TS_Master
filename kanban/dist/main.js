@@ -7,6 +7,31 @@ import { TaskService } from "./services/TaskServices.js";
 //Instanciar servicio y cargar tareas guardadas
 const service = new TaskService();
 service.loadFromLocalStorage();
+/* Referencias al DOM */
+// Elementos del formulario de Creación
+const form = document.getElementById("task-form");
+const titleTask = document.getElementById("task-title");
+const descriptionTask = document.getElementById("task-description");
+// Agregar una nueva tarea
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); /* C04: Comportamiento por Defecto (preventDefault()) */
+    const title = titleTask.value.trim();
+    const description = descriptionTask.value.trim();
+    if (title === "") {
+        alert("El titulo de la tarea es obligatorio");
+        titleTask.focus(); //Enfocar el campo faltante
+        return; /* C05 Validación básica */
+    }
+    if (description === "") {
+        alert("La descripción de la tarea es obligatoria");
+        descriptionTask.focus();
+        return;
+    }
+    service.addTask(title, description);
+    // renderTasks();
+    titleTask.value = "";
+    descriptionTask.value = "";
+});
 /* C01: Variable para almacenar el elemento que se está arrastrando */
 let draggedElement = null;
 /* C02: Seleccionar elementos que se pueden arrastrar */

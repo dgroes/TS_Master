@@ -9,13 +9,16 @@ export class TaskService {
         this.task.push(newTask);
         this.saveToLocalStorage();
     }
+    getTask() {
+        return this.task;
+    }
     //Definir el guardado del LocalStorage
     saveToLocalStorage() {
-        localStorage.setItem("task", JSON.stringify(this.task));
+        localStorage.setItem(TaskService.STORAGE_KEY, JSON.stringify(this.task));
     }
     //Cargar datos guardados en el LocalStorage
     loadFromLocalStorage() {
-        const data = localStorage.getItem("task");
+        const data = localStorage.getItem(TaskService.STORAGE_KEY);
         if (data) {
             //Con Parse se convierte un String a JSON
             const rawTasks = JSON.parse(data);
@@ -25,3 +28,4 @@ export class TaskService {
         }
     }
 }
+TaskService.STORAGE_KEY = "kanban_tasks"; /* C06 Key Personalizada */

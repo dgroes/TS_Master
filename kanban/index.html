@@ -77,19 +77,30 @@
       </article>
     </section>
 
-    <button id="openDialog">Nueva Tarea</button>
+    <!-- MODAL DE FORMULARIO DE TAREA -->
+    <dialog id="myDialog" closedby="any">
 
-    <dialog id="myDialog">
-      <h2>Nueva Tarea</h2>
-      
-      <form method="dialog">  <!-- method="dialog" cierra automáticamente el modal al enviar -->
-          <input type="text" id="title" placeholder="Título" required>
-          <input type="text" id="description" placeholder="Descripción">
+      <article>
+
+        <header>
+          <form method="dialog">
+            <button aria-label="Close" rel="prev" class="dialog__btnClose"></button>
+          </form>
+          <p>
+            <strong class="dialog__title">Agregar nueva tarea</strong>
+          </p>
+        </header>
+
+        <form method="dialog" class="task-form" id="task-form">
+          <input type="text" id="task-title" placeholder="Título" />
+          <input type="text" id="task-description" placeholder="Descripción" />
           <button type="submit">Añadir al Kanban</button>
-      </form>
-  
-      <button id="closeDialog">Cerrar</button>  <!-- Mejor con ID específico -->
-  </dialog>
+        </form>
+
+      </article>
+
+    </dialog>
+
 
     <script type="module" src="./dist/main.js"></script>
   </body>
