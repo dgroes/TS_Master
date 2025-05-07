@@ -114,3 +114,61 @@ Con esas líneas se asegura que haya algo arrastrado (`draggedElement`), que lo 
 -`zone.appendChild(draggedElement)`: Mueve el elemento arrastrado al contenedor (`zone`) actual. Esto realiza el movimiento en el DOM. Entonces esto es lo que mueve visualemnte el elemento arrastrado (`draggesElement`) dentro del contenedor `zone`. Se hace uso del `appendChild` para colocarlo com hijo del elemento que actúa como zona de drop.
 -`draggedElement = null`: Limpia la variable para evitar conflictos con futuros eventos de arrastre. por lo que hace más o menos esto: "Ya que terminamos de mover el elemento, limpiamos la variable `draggedElement` para que no siga apuntando a ese elemento".
 - El uso del `draggedElement = null` es una buena práctica porqué evita errores si alguien intenta arrastrar de nuevo y la varible tiene un valor antiguo y permite que el sistema esté listo para un próxima operación de drag & drop limpia.
+
+### C04: Comportamiento por Defecto (preventDefault())
+El método `preventDefault()` evita el comportamiento por defecto de un evento en JS. En este caso del formulario, su comportamiento por defecto es:
+- Recargar la página al hacer submit.
+- Evitar los datos a la URL especificada en el atributo action
+
+- Sin `prevent`: La páginas se recargaría inmediatemente despues del submit, borrando todos los datos en memoria y evitando que se ejecuten `addTask` y `rederTask`
+- Con `prevent`: La página **no se recarga**, permitiendo que el código JS maneje los datos del formulario
+
+### 05 Validación básica
+El uso de esta línea es para que:
+- El campo `title` no esté vacío (despues de eliminar los espacios con el `.trim`)
+- Si está vacio (""), el código no continua, el `return` detiene la ejecución de la función.
+
+### C06 Key Personalizada
+En el localStorage nuestros datos almacenados poseen una `key`, lo ideal sería mantener una `key` personalizada
+
+Este código posee una key `hardcodeada` directamente en los métodos:
+```typescript
+localStorage.setItem("task", JSON.stringify(this.tasks)); // ❌ Frágil (poco mantenible)
+```
+
+Una solución sería crearla de la siguiente forma:
+```typescript
+private static readonly STORAGE_KEY = "kanban_tasks"; // ✅ Key centralizada
+```
+Con este cambio:
+- ünico punto de cambio: Si se necesita renombrar la key, se hace de un solo lugar.
+- Legibilidad: Claridad sobre qué key se usa en toda la clase
+- Evitar errores tipográficos: no se repita strings mágisocs ("tasks") en múltiples métodos. 
+
+#### Convenciones para el nombre de una Key
+- Especifico: Para una app evitar nombres genéricos como "data" o "tasks"
+- Incluya versión: (ej: `_v1`) Si se esperan cambios futuros en la estructura de datos.
+- Prefico único: si el sistema tiene multiples móduls (ej: kanban_tasks, kanban_settings)
+
+Ejemplos de convenciones de nombre
+```typescript
+private static readonly STORAGE_KEY = "kanban_tasks_v1";  
+private static readonly STORAGE_KEY = "myapp_tasks_2024";  
+private static readonly STORAGE_KEY = "projectX_tasks";  
+```
+
+#### Key global o por usuario
+Si el sistema maneja múltiples usuarios, se podría agregar un ID como `user_id`_
+```typescript
+export class TaskService {
+    private readonly STORAGE_KEY: string; // Key dinámica
+
+    constructor(userId: string) {
+        this.STORAGE_KEY = `kanban_tasks_${userId}`; // Ej: "kanban_tasks_john123"
+    }
+}
+```
+
+### 
+
+###
