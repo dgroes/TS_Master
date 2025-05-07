@@ -37,3 +37,23 @@ article header{
 .kanban--done {
     background-color: #007a50;
 }
+
+
+.dialog__title{
+    font-size: 2rem;
+}
+
+
+.kanban__title{
+    font-size: 26px;
+    color: white;
+    font-weight: bold;
+    background-color: #27282b;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.kanban__title h1{
+    
+}
