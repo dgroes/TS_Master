@@ -169,6 +169,76 @@ export class TaskService {
 }
 ```
 
-### 
+### C07 Array de Objetos literales
+Esto es un array de objetos literales, en el que **cada objeto** tiene 2 propiedades:
+- `element`: El DOM obtenido con `document.querySelector(...)`;
+- `status`: un straing  que representa el estado de las tareas que van en esa sección
+Todo esto permite asociar visualmente un `element` del DOM (una columna del kanban) con el `status` de las tareas que debería mostrar. Así se puede recorrer ese array u pintar cada sección sin repetir código para cada columna.
+
+### C08: Bucle con destructuring de objetos  
+Esto es un bucle `forEach` con **destructuring de objetos**. Por cada objeto dentro del array `section`, existe directamente sus dos propiedades: `element` y `status`. Esto es equivalente a:
+```typescript
+sections.forEach((section) => {
+   const element = section.element;
+   const status = section.status;
+});
+```
+
+### C09: non-null assertion operador
+El `!` es el **non-null assertion operator** de TS. Lo que hace es decirle al compilador:
+"*Estoy seguro de que `element` no es `null` ni `undefined`, confía en mí*".
+Se usa cuando el tipo podría ser `HTMLElement | null`, como lo devuelve `querySelector()`, pero se sabe con certeza que **si esxiste en el DOM**
+
+### C10: Clon de nodo
+Este código lo que hace es clonar un nodo HTML (en este caso el titulo del Kanban) y con el `true` se indica que también copie los nodos hijos (contenido interiro).
+
+Para recordad los Node del DOM:
+Son elementos básicos que componen la estrucura de un documento HTML. Cada parte de una página (etiqueta, texto, comentraios, atributos, etc.) está representada como un **nodo** en el **Árbol del DOM** (*Document Object Model*)
+
+#### Eejemplo de la Estrucura del DOM: Arblol de Nodos
+El DOM organiza los nodos en una estrucura jerárquica (como un árbol genealógico). 
+```HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo</title>
+</head>
+<body>
+    <h1>Hola Mundo</h1>
+    <p>Esto es un párrafo.</p>
+</body>
+</html>
+```
+
+Se representa así en el DOM:
+```
+DOCUMENT (9)
+└── html (1)
+    ├── head (1)
+    │   └── title (1)
+    │       └── "Ejemplo" (3)
+    └── body (1)
+        ├── h1 (1)
+        │   └── "Hola Mundo" (3)
+        └── p (1)
+            └── "Esto es un párrafo." (3)
+```
+
+### C11: Filtrar y renderizar tareas por status
+En este foreach lo que se hace es 
+- filtrar las tareas cuyo `task.status === status` de esa seción
+- Luego por cada tarea filtrada:
+    - Se crea un `<article>`
+    - Se le asignan clases y contenido
+    - Se añade a la sección (`element!.appendChild(taskElement)`)
+Entonces el renderTasks() hace:
+- Recorre cada sección (asociada a un status)
+- limpia la columna y le añade su título
+- Recorre las tareas que pertenecen a ese status
+- Crea un artículo visual por cada una y lo mete en la sección correspondiente
+
+###
+
+###
 
 ###
