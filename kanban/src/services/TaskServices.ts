@@ -24,11 +24,20 @@ export class TaskService {
     public loadFromLocalStorage(): void{
         const data = localStorage.getItem(TaskService.STORAGE_KEY);
         if (data){
-            //Con Parse se convierte un String a JSON
-            const rawTasks = JSON.parse(data);
-            this.task = rawTasks.map((t:any) => {
-                new Task(t.id, t.title, t.description, t.status);
-            })
+            try{
+                //Con Parse se convierte un String a JSON
+                const rawTasks = JSON.parse(data);
+
+                //Filtrar objetos invalidos ♿ on ull
+                this.task = rawTasks
+                .filter ((t: any) => t?.id != null && t?.title && t?.status) //Valida propiedades
+                .map((t:any) =>   new Task(t.id, t.title, t.description, t.status));
+
+
+            } catch (error) {
+                console.error("Error al parsear datos:", error);
+                this.task = []; // si hay error, inicializa como array vacío
+            }
         }
     }
 }
