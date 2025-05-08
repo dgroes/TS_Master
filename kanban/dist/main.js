@@ -28,32 +28,48 @@ form.addEventListener("submit", (e) => {
         return;
     }
     service.addTask(title, description);
-    // renderTasks();
+    renderTasks();
+    //Formatio de inputs:
     titleTask.value = "";
     descriptionTask.value = "";
 });
-/* C01: Variable para almacenar el elemento que se está arrastrando */
-let draggedElement = null;
-/* C02: Seleccionar elementos que se pueden arrastrar */
-document.querySelectorAll(".draggable").forEach(el => {
-    //Se activa cuando el usuario empieza a arrastrar un elemento; e es el evento DragEvent.
-    el.addEventListener("dragstart", (e) => {
-        var _a;
-        const event = e;
-        draggedElement = el;
-        (_a = event.dataTransfer) === null || _a === void 0 ? void 0 : _a.setData("text/plain", ""); // Necesario en algunos navegadores
+/* LLevar las tasks almacenasdas a la tabla de to-do */
+//Definir los elementos del kanban (section) y su status correspondiente
+/* C07 Array de Objetos literales */
+const sections = [
+    { element: document.querySelector(".kanban--todo"), status: "to-do" },
+    { element: document.querySelector(".kanban--progress"), status: "in-progress" },
+    { element: document.querySelector(".kanban--done"), status: "done" }
+];
+const kanbanTitle = document.querySelector(".kanban__title");
+function renderTasks() {
+    const tasks = service.getTask();
+    /* C08: Bucle con destructuring de objetos   */
+    sections.forEach(({ element, status }) => {
+        //Limpiar y agregar titulo
+        /* C09: non-null assertion operador */
+        element.innerHTML = '';
+        /* C10: Clon de nodo */
+        const titleClone = kanbanTitle.cloneNode(true); //Clona el titulo para cada seccion
+        element.appendChild(titleClone);
+        /* C11: Filtrar y renderizar tareas por status */
+        tasks
+            .filter(task => task.status === status)
+            .forEach(task => {
+            const taskElement = document.createElement("article");
+            taskElement.className = "draggable";
+            taskElement.draggable = true;
+            taskElement.innerHTML = `
+                    <header>${task.title}</header>
+                    ${task.description}
+                `;
+            element.appendChild(taskElement);
+        });
     });
-});
-/* C03: Zonas en donde soltar elementos */
-document.querySelectorAll(".dropzone").forEach(zone => {
-    zone.addEventListener("dragover", (e) => {
-        e.preventDefault(); // Necesario para permitir el drop
-    });
-    zone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (draggedElement) {
-            zone.appendChild(draggedElement); // Mover el div arrastrado al nuevo article
-            draggedElement = null;
-        }
-    });
-});
+}
+//Mostrar tareas al cargar
+renderTasks();
+//Importar fichero de Drag
+import { DragDropManager } from "./events/DragDropManager.js";
+const dragDrop = new DragDropManager();
+dragDrop.init();
