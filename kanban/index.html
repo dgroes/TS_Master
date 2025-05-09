@@ -16,50 +16,25 @@
     <button id="openDialog">Nueva Tarea</button>
 
     <main class="container-fluid" id="kanban">
-      <section class="kanban-column kanban--todo">
-        <button id="add">Añadir nueva tarea</button>
-        <article class="draggable" draggable="true">
-          <header>Header</header>
-          Body
-        </article>
+      <section class="kanban-column kanban--todo" id="dropzone">
+        <header class="kanban__title"><h1>TO DO</h1></header>
+        <!-- <article class="draggable" draggable="true">
         <article>
           <header>Header</header>
           Body
-        </article>
-        <article>
-          <header>Header</header>
-          Body
-        </article>
+        </article> -->
       </section>
 
-      <section class="kanban-column kanban--progress" id="dropZone">
-        <article>
+      <section class="kanban-column kanban--progress" id="dropzone">
+        <header class="kanban__title"><h1>IN PROGRESS</h1></header>
+       <!--  <article class="draggable" draggable="true">
           <header>Header</header>
           Body
-        </article>
-        <article>
-          <header>Header</header>
-          Body
-        </article>
-        <article>
-          <header>Header</header>
-          Body
-        </article>
+        </article> -->
       </section>
 
-      <section class="kanban-column kanban--done">
-        <article class="draggable">
-          <header>Header</header>
-          Body
-        </article>
-        <article>
-          <header>Header</header>
-          Body
-        </article>
-        <article>
-          <header>Header</header>
-          Body
-        </article>
+      <section class="kanban-column kanban--done" id="dropzone">
+        <header class="kanban__title"><h1>DONE</h1></header>
       </section>
     </main>
 
@@ -79,12 +54,14 @@
 
     <!-- MODAL DE FORMULARIO DE TAREA -->
     <dialog id="myDialog" closedby="any">
-
       <article>
-
         <header>
           <form method="dialog">
-            <button aria-label="Close" rel="prev" class="dialog__btnClose"></button>
+            <button
+              aria-label="Close"
+              rel="prev"
+              class="dialog__btnClose"
+            ></button>
           </form>
           <p>
             <strong class="dialog__title">Agregar nueva tarea</strong>
@@ -96,11 +73,8 @@
           <input type="text" id="task-description" placeholder="Descripción" />
           <button type="submit">Añadir al Kanban</button>
         </form>
-
       </article>
-
     </dialog>
-
 
     <script type="module" src="./dist/main.js"></script>
   </body>
